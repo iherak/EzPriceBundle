@@ -14,6 +14,8 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Converter for Price field type external storage
+ *
+ * @method \EzSystems\EzPriceBundle\eZ\Publish\Core\FieldType\Price\PriceStorage\Gateway getGateway
  */
 class PriceStorage extends GatewayBasedStorage
 {

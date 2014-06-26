@@ -85,11 +85,16 @@ class LegacyStorage extends Gateway
     */
     private function fetchPriceData( $fieldId, $versionNo )
     {
-
         $price = array();
         $priceLegacyData = $this->getPriceLegacyData( $fieldId, $versionNo );
 
         $price['price'] = $priceLegacyData['data_float'];
+
+        if ( empty( $priceLegacyData['data_text'] ) )
+        {
+            return $price;
+        }
+
         list( $isVatIncluded, $vatTypeId ) = explode( ',', $priceLegacyData['data_text'] );
         $price['is_vat_included'] = $isVatIncluded == 1 ? true : false;
         $price['vat_percentage'] = $this->getVatPercentage( $vatTypeId );
