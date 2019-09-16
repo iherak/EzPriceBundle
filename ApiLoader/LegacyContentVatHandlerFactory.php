@@ -15,28 +15,15 @@ use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\ContentVat\Gateway\Doc
 class LegacyContentVatHandlerFactory
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     */
-    public function __construct( ContainerInterface $container )
-    {
-        $this->container = $container;
-    }
-
-    /**
      * Builds the legacy vat finder handler
      *
      * @param \eZ\Publish\Core\Persistence\Database\DatabaseHandler $dbHandler
      *
      * @return \EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\ContentVat\ContentVatHandler
      */
-    public function buildLegacyContentVatHandler( DatabaseHandler $dbHandler )
+    public function buildLegacyContentVatHandler( ContainerInterface $container, DatabaseHandler $dbHandler )
     {
-        $legacyVatFinderHandlerClass = $this->container->getParameter( "ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler.class" );
+        $legacyVatFinderHandlerClass = $container->getParameter( "ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler.class" );
         return new $legacyVatFinderHandlerClass(
             new DoctrineDatabase( $dbHandler )
         );

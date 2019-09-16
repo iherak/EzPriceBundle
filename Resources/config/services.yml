@@ -45,26 +45,16 @@ services:
     ezprice.api.service.pricewithvatcalculator:
         class: '%ezprice.api.service.pricewithvatcalculator.class%'
 
-    ezprice.api.storage_engine.legacy.handler.ezprice.vathandler.factory:
-        class: '%ezprice.api.storage_engine.legacy.handler.ezprice.vathandler.factory.class%'
-        arguments:
-            - '@service_container'
-
-    ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler.factory:
-        class: '%ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler.factory.class%'
-        arguments:
-            - '@service_container'
-
     ezprice.api.storage_engine.legacy.handler.ezprice.vathandler:
         class: '%ezprice.api.storage_engine.legacy.handler.ezprice.vathandler.class%'
-        factory_service: ezprice.api.storage_engine.legacy.handler.ezprice.vathandler.factory
-        factory_method: buildLegacyVatHandler
+        factory: ['EzSystems\EzPriceBundle\ApiLoader\LegacyVatHandlerFactory', 'buildLegacyVatHandler']
         arguments:
+            - '@service_container'
             - '@ezpublish.api.storage_engine.legacy.dbhandler'
 
     ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler:
         class: '%ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler.class%'
-        factory_service: ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler.factory
-        factory_method: buildLegacyContentVatHandler
+        factory: ['EzSystems\EzPriceBundle\ApiLoader\LegacyContentVatHandlerFactory', 'buildLegacyContentVatHandler']
         arguments:
+            - '@service_container'
             - '@ezpublish.api.storage_engine.legacy.dbhandler'
